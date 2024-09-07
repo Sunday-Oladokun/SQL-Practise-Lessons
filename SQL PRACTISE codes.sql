@@ -1,0 +1,308 @@
+-- DAY ONE- SECTIONS 3 AND 4
+
+-- SHOW THE DATABASES IN YOUR SERVER
+SHOW DATABASES;
+
+-- CREATE A DATABASE
+CREATE DATABASE slime_store;
+CREATE DATABASE pet_store;
+
+-- DROP/DELETE DATABASE
+DROP DATABASE slime_store;
+
+-- USE OR WORK IN A DATABASE
+USE pet_store;
+-- YOU CAN ALSO DOUBLE CLICK THE DATABASE UNDER SCHEMAS BY THE LEFT DIRECTORY TO SELECT OR USE
+
+
+-- DAY 2 SECTION 5
+
+-- SHOW CURRENT WORKING DATABASE
+SELECT DATABASE();
+
+-- CREATE TABLES INSIDE YOUR DATABASE FOR STORING DATA
+CREATE TABLE cats (
+	name VARCHAR(50),
+	age INT
+);
+
+CREATE TABLE dogs(
+	name VARCHAR(50),
+	breed VARCHAR(50),
+	age INT
+);
+
+-- VIEW OR SHOW YOUR TABLES IN DATABASE
+SHOW TABLES;
+
+-- VIEW TABLE DETAILS
+SHOW COLUMNS FROM dogs;
+
+-- OTHER WAYS
+DESC dogs;
+DESCRIBE cats;
+-- YOU CAN ALSO USE THE INFO(i) BESIDE THE TABLE TO VIEW IT
+
+-- DELETE TABLE
+DROP TABLE dogs;
+-- YOU CAN ALSO USE THE SCHEMA SECTION TO DO THIS
+
+-- ADD DATA TO TABLES
+INSERT INTO cats(name, AGE)
+VALUES ('Tiger Pot', 4);
+
+INSERT INTO cats(name, AGE)
+VALUES ('Fluffy', 6);
+
+-- YOU CAN SWITCH THE ORDER
+INSERT INTO cats(AGE, name)
+VALUES (3, 'Patty');
+
+-- INSERT MULTIPLE VALUES INTO THE TABLE
+INSERT INTO cats(name, AGE)
+VALUES('Skimmy', 4),
+	  ('Lightbender', 7),
+	  ('IBD', 5);
+
+-- SHOW ALL ENTRIES IN TABLE
+SELECT * FROM cats;
+
+-- WORKING WITH NULL VALUES(Unknown value, it is different from Zero(0)), It means the column can have null values
+INSERT INTO cats(name) -- DO NOT ADD THE COLUMN THAT IS MEANT TO BE NULL
+VALUES('Beamy');
+
+INSERT INTO cats() VALUES();
+
+-- THIS IS WHY WE ADD RESTRAINTS TO HANDLE NULL ENTRIES
+CREATE TABLE dogs(
+name VARCHAR(50),
+Age INT NOT NULL); -- IF NOT PROVIDED, IT WOULD RETURN ERROR
+
+-- NOTE- ALWAYS USE SINGLE QUOTES MOST OF THE TIME OR HANDLE IT WITH FORWARD SLASH
+INSERT INTO dogs(name, Age)
+VALUES ('Mario\'s Doggy', 8);
+
+INSERT INTO dogs(name, Age)
+VALUES ("Patel's Doggy", 8);
+
+-- SETTING DEFAULT VALUES FOR CERTAIN COLUMNS (THIS WILL KICK IN IF YOU DON'T PROVIDE A VALUE)
+CREATE TABLE `lost cats` (
+    name VARCHAR(50) DEFAULT 'Unknown',
+    AGE INT DEFAULT 999
+);
+
+-- NOTICE THE USE OF BACK TICKS FOR COMPOUND TABLE NAMES
+
+INSERT INTO `lost cats` (name)
+VALUES ('Poggy');
+
+-- NOT NULL AND DEFAULT CAN WORK HAND IN HAND FOR A COLUMN SO IT PREVENTS YOU FROM PROVIDING 'NULL' AS A VALUE
+INSERT INTO `lost cats` (name, AGE)
+VALUES (NULL, NULL);
+
+-- TO HANLDE THE SITUATION
+CREATE TABLE `lost cats2` (
+    name VARCHAR(50) NOT NULL DEFAULT 'Unknown',
+    AGE INT DEFAULT 999
+);
+
+-- TALKING ABOUT 'KEY' IN OUR TABLE DESC- A UNIQUE IDENTIFIER TO HANDLE SIMILAR ENTRIES AND DIFFERENTIATE THEM
+-- PRIMARY KEY- UNIQUE IDENTIFIER FOR EACH INDIVIDUAL ROW
+
+CREATE TABLE schools (
+school_ID INT NOT NULL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+size VARCHAR(50)
+);
+
+-- ANOTHER SYNTAX
+CREATE TABLE schools (
+    school_ID INT NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    size VARCHAR(50),
+    PRIMARY KEY (school_ID)
+);
+
+-- PRIMARY KEYS CAN NEVER BE NULL, SO NO NEED FOR NOT NULL. IF YOU OMIT ITS ENTRY IN INSERT, IT WILL RETURN AN ERROR
+-- ADDING AUTO INCREMENT TO ID
+CREATE TABLE towns (
+ID INT PRIMARY KEY AUTO_INCREMENT, 
+Name VARCHAR(50) NOT NULL, 
+Population INT DEFAULT 0);
+
+-- WITH THE ABOVE, I CAN NOW ENTER VALUES AND NOT SPECIFY ID
+
+-- DAY 3 - CRUD(CREATE, READ, UPDATE, DELETE) OPERATIONS
+
+-- CREATE A NEW TABLE
+USE pet_store;
+
+-- CREATE
+CREATE TABLE  cats_2 (
+	cat_ID INT AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(100),
+	breed VARCHAR(100),
+	age INT
+);
+
+-- INSERT VALUES INTO THE TABLE
+INSERT INTO cats_2(name, breed, age) 
+VALUES ('Ringo', 'Tabby', 4),
+       ('Cindy', 'Maine Coon', 10),
+       ('Dumbledore', 'Maine Coon', 11),
+       ('Egg', 'Persian', 4),
+       ('Misty', 'Tabby', 13),
+       ('George Michael', 'Ragdoll', 9),
+       ('Jackson', 'Sphynx', 7);
+
+-- READ
+-- READ ALL
+SELECT * FROM cats_2;
+
+-- SELECT COLUMNS
+SELECT name FROM cats_2;
+SELECT name, breed, age FROM cats_2;
+
+-- COMBINING WHERE WITH SELECT
+SELECT * FROM cats_2 WHERE age=4;
+SELECT * FROM cats_2 WHERE name='Egg';
+SELECT name,age FROM cats_2 WHERE breed='Tabby';
+SELECT cat_id,age FROM cats_2 WHERE cat_id=age;
+
+-- ALIASES(PRINTING DATA WITH SHORTER NAMES, IT IS TEMPORARY FOR THAT QUERY ALONE)
+SELECT cat_id AS ID, name FROM cats_2;
+
+-- UPDATE
+-- UPDATE AND SET GO TOGETHER FOR UPDATES
+SELECT * FROM cats;
+UPDATE cats SET name='who_cares', AGE='0'; -- YOU CAN TOGGLE SAFE MODE ON AND OFF FOR SAFETY OF DATA
+
+UPDATE cats_2 
+SET 
+    age = 14
+WHERE
+    name = 'Misty';
+    
+-- RULE OF THUMB- SELECT FIRST TO SEE BEFORE UPDATING ANYTHING
+
+-- DELETE
+-- DELETE EVERYTHING IN A TABLE
+DELETE FROM cats;
+
+-- DELETE OTHERS
+DELETE FROM cats_2 
+WHERE
+    name = 'Egg';
+    
+DELETE FROM cats_2 
+WHERE
+    age = cat_id;
+    
+
+-- DAY 4 - CRUD EXERCISES
+
+-- TASK 1- CREATE DATABASE FOR STORING SHIRTS
+CREATE DATABASE shirt_db;
+
+-- USE THE DATABASE
+USE shirt_db;
+
+-- CREATE TABLE FOR HOLDING OUR SHIRTS DATA
+CREATE TABLE shirts (
+    shirt_id INT PRIMARY KEY AUTO_INCREMENT,
+    article VARCHAR(20),
+    color VARCHAR(20),
+    shirt_size VARCHAR(4),
+    last_worn INT
+)
+;
+
+-- DESCRIBE OR SHOW DETAILS ABOUT TABLE
+DESC shirts;
+
+-- INSERT DATA INTO THE SHIRTS TABLE
+INSERT INTO shirts(article, color, shirt_size, last_worn)
+VALUES('t-shirt', 'white', 'S', 10),
+('t-shirt', 'green', 'S', 200),
+('polo shirt', 'black', 'M', 10),
+('tank top', 'blue', 'S', 50),
+('t-shirt', 'pink', 'S', 0),
+('polo shirt', 'red', 'M', 5),
+('tank top', 'white', 'S', 200),
+('tank top', 'blue', 'M', 15)
+;
+
+-- ADD A NEW ROW OF DATA FOR SHIRT
+INSERT INTO shirts(article, color, shirt_size, last_worn)
+VALUES('polo shirt', 'purple', 'M', 50)
+;
+
+-- SELECT ALL SHIRTS OR VIEW THE TABLE CREATED
+SELECT 
+    *
+FROM
+    shirts;
+
+-- SHOW TABLE WITH ONLY SHIRTS AND COLORS
+SELECT 
+    article, color
+FROM
+    shirts;
+
+-- SHOW ALL DATA EXCEPT IDS
+SELECT 
+    article, color, shirt_size, last_worn
+FROM
+    shirts;
+    
+-- SHOW ALL SHIRTS WITH SIZE 'M'
+SELECT 
+    *
+FROM
+    shirts
+WHERE
+    shirt_size = 'M';
+    
+-- UPDATE ALL POLO SHIRTS TO SIZE LARGE
+UPDATE shirts 
+SET 
+    shirt_size = 'L'
+WHERE
+    article = 'polo shirt'
+;
+
+-- UPDATE THE SHIRT LAST WORN 15 DAYS AGO TO ZERO
+UPDATE shirts 
+SET 
+    last_worn = 0
+WHERE
+    last_worn = 15
+;
+
+-- UPDATE ALL WHITE SHIRTS TO SIZE OF XS AND COLORS TO OFF WHITE
+UPDATE shirts 
+SET 
+    shirt_size = 'XS',
+    color = 'off white'
+WHERE
+    color = 'white'
+;
+
+-- DELETE ALL SHIRTS LAST WORN 200 DAYS AGO
+DELETE FROM shirts 
+WHERE
+    last_worn = 200;
+
+-- DELETE ALL TANK TOPS
+DELETE FROM shirts 
+WHERE
+    article = 'tank top';
+    
+-- DELETE ALL SHIRTS(EMPTY THE TABLE)
+DELETE FROM shirts;
+
+-- DELETE THE TABLE
+DROP TABLE shirts;
+
+
+
