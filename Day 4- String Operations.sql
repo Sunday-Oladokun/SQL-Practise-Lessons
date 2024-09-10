@@ -157,5 +157,5 @@ SELECT TRIM(LEADING '.' FROM '...Boys');
 
 SELECT TRIM(TRAILING '.' FROM 'Boys...')
 
-SELECT TRIM(BOTH '.' FROM '...Boys...');
+SELECT TRIM(BOTH '.' FROM '...Boys...'); 
 
