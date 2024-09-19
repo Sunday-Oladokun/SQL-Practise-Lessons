@@ -105,3 +105,36 @@ FROM
     books
 ORDER BY author_lname , released_year DESC
 LIMIT 2 , 5;
+
+-- LIKE-- FOR SEARCHING USING KEYWORDS OR WORDS CLOSE TO THE ORIGINAL
+-- %- WILD CARDS- FIND UNLIMITED NUMBER(ZERO OR MORE CHARACTERS)
+-- ____ -- UNDERSCORES MEAN EXACT NUMBER OF CHARACTERS
+
+SELECT 
+    title, author_fname, author_lname
+FROM
+    books
+WHERE
+    author_fname LIKE '%da%';
+
+-- SEARCH FOR WHERE THERE IS ':' IN BOOK TITLE
+SELECT 
+    *
+FROM
+    books
+WHERE
+    title LIKE '%:%';
+
+-- FIND AUTHOR FIRST NAME WITH FOUR CHARACTERS
+SELECT 
+    *
+FROM
+    books
+WHERE
+    author_fname LIKE '____';
+    
+-- SELECT THOSE ENDING WITH CERTAIN CHARACTERS
+SELECT * FROM books WHERE author_fname LIKE '%n';
+
+-- HOW DO YOU ESCAPE WILDCARDS IN 'LIKE'
+SELECT * FROM books WHERE title LIKE '%\%%';
