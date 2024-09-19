@@ -1,0 +1,58 @@
+-- AGGREGATE FUNCTIONS
+
+-- SHOW THE TABLES IN CURRENT DATABASE
+SHOW TABLES;
+
+-- SHOW THE CURRENT WORKING DATABASE
+SELECT DATABASE()
+
+-- 1. COUNT FUNCTION
+-- COUNTS NUMBER OF ENTRIES
+
+SELECT 
+    COUNT(*)
+FROM
+    books;
+
+-- COUNT NUMBER OF FIRST NAMES
+SELECT 
+    COUNT(author_fname)
+FROM
+    books;
+    
+-- COUNT DISTINCT RELEASE YEAR VALUES
+SELECT 
+    COUNT(DISTINCT released_year)
+FROM
+    books;
+
+-- HOW MANY TITLES CONTAIN 'THE'
+SELECT 
+    COUNT(*)
+FROM
+    books
+WHERE
+    title LIKE '%the%';
+
+-- 2. GROUPBY FUNCTION
+-- SUMMARISES IDENTICAL DATA INTO SINGLE ROWS
+
+SELECT 
+    author_lname, COUNT(*) AS books_written_no
+FROM
+    books
+GROUP BY author_lname
+ORDER BY books_written_no;
+
+-- HOW MANY BOOKS WERE RELEASED IN A GIVEN YEAR
+SELECT 
+    released_year, COUNT(*) AS number_books_released
+FROM
+    books
+GROUP BY released_year
+ORDER BY number_books_released;
+
+-- GENERALLY GROUP BY THE COLUMN AND SELECT BY COLUMN TOO
+
+-- 3. MIN AND MAX
+-- 
